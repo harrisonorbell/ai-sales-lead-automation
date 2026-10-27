@@ -193,6 +193,22 @@ Potential extensions include:
 - Integration with additional communication platforms
 - Cloud deployment
 
+## What I Learned
+
+Building this project gave me practical experience connecting different technologies to create a complete business automation system.
+
+Some of the main things I learned were:
+
+- **API integrations:** How applications communicate through HTTP requests, webhooks and JSON data.
+- **Workflow automation:** How to build multi-step n8n workflows with conditional routing, data validation and database operations.
+- **AI integration:** How to integrate Claude AI, structure its responses and use the results to make automated decisions.
+- **Error handling:** How to manage failed API requests, invalid AI responses and unsuccessful email notifications.
+- **Testing and debugging:** How to troubleshoot individual workflow nodes and test the complete system using different customer enquiries.
+
+One of the biggest challenges was making sure all the components worked together reliably, rather than simply getting each component working individually.
+
+This project helped me understand how AI can be integrated into real business processes and provided a foundation for building more advanced automation systems.
+
 ## Project Status
 
 **Completed — Functional Portfolio Prototype**
