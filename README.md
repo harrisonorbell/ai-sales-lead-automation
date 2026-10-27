@@ -200,3 +200,17 @@ Potential extensions include:
 The frontend, n8n workflow, Claude AI integration, database storage and automated email notifications have been implemented and successfully tested.
 
 This project demonstrates practical experience with **API integrations, AI-powered decision-making, workflow automation, database operations, HTTP requests and automated business communications**.
+
+## Project Screenshots
+
+### Customer Enquiry Website
+
+![Customer enquiry website](screenshots/website.png)
+
+### n8n Automation Workflow
+
+![Complete n8n automation workflow](screenshots/workflow.png)
+
+### Lead Database
+
+![Customer enquiries and AI analysis stored in the database](screenshots/database.png)
