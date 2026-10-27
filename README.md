@@ -1,10 +1,10 @@
-AI Sales Lead Automation
+# AI Sales Lead Automation
 
 An AI-powered sales lead management system that automatically receives, validates, analyses, prioritises and stores customer enquiries.
 
-Built using n8n, Claude AI, JavaScript, HTML and CSS, this project demonstrates how AI and workflow automation can help businesses manage incoming sales enquiries more efficiently.
+Built using **n8n, Claude AI, JavaScript, HTML and CSS**, this project demonstrates how AI and workflow automation can help businesses manage incoming sales enquiries more efficiently.
 
-Overview
+## Overview
 
 Businesses often receive customer enquiries through website forms and must manually review each submission, determine its importance and decide how quickly to respond.
 
@@ -12,270 +12,191 @@ This project automates that process.
 
 When a customer submits an enquiry through the website, the system:
 
-Receives the enquiry through an n8n webhook.
+1. Receives the enquiry through an n8n webhook.
+2. Validates the submitted customer information.
+3. Checks whether the customer already exists in the database.
+4. Stores new enquiries in an n8n Data Table.
+5. Uses Claude AI to analyse and classify the enquiry.
+6. Updates the database with the AI-generated analysis.
+7. Sends email notifications for high- and medium-priority enquiries.
+8. Tracks notification status and handles selected workflow errors.
 
-Validates the submitted customer information.
+## Technologies Used
 
-Checks whether the customer already exists in the database.
+| Technology | Purpose |
+|---|---|
+| HTML | Customer enquiry form |
+| CSS | Responsive website styling |
+| JavaScript | Form handling and HTTP requests |
+| n8n | Workflow orchestration and automation |
+| Claude AI (Anthropic) | Enquiry analysis and prioritisation |
+| n8n Data Tables | Customer and analysis storage |
+| SMTP | Automated email notifications |
+| JSON | Data exchange and workflow configuration |
 
-Stores new enquiries in an n8n Data Table.
+## Key Features
 
-Uses Claude AI to analyse and classify the enquiry.
-
-Updates the database with the AI-generated analysis.
-
-Sends email notifications for high- and medium-priority enquiries.
-
-Tracks notification status and handles selected workflow errors.
-
-Technologies Used
-
-Technology
-
-Purpose
-
-HTML
-
-Customer enquiry form
-
-CSS
-
-Responsive website styling
-
-JavaScript
-
-Form handling and API requests
-
-n8n
-
-Workflow orchestration and automation
-
-Claude AI (Anthropic)
-
-Enquiry analysis and prioritisation
-
-n8n Data Tables
-
-Customer and analysis storage
-
-SMTP
-
-Automated email notifications
-
-JSON
-
-Data exchange and workflow configuration
-
-Key Features
-
-Customer Enquiry Website
+### Customer Enquiry Website
 
 A responsive web form collects:
 
-Customer name
-
-Email address
-
-Requested service
-
-Estimated budget
-
-Project description
+- Customer name
+- Email address
+- Requested service
+- Estimated budget
+- Project description
 
 JavaScript submits the information to an n8n webhook using an HTTP POST request.
 
-The website displays loading, success and error messages.
+The website displays loading, success and error messages to provide feedback to customers.
 
-AI-Powered Lead Analysis
+### AI-Powered Lead Analysis
 
 Claude AI analyses each enquiry and generates:
 
-Priority: High, medium or low
+- **Priority:** High, medium or low
+- **Category:** Type of service requested
+- **Summary:** Concise description of the enquiry
+- **Recommended action:** Suggested next step for the sales team
 
-Category: Type of service requested
+The AI response is parsed and validated before being saved to the database.
 
-Summary: Concise description of the enquiry
+### Automated Priority Routing
 
-Recommended action: Suggested next step for the sales team
+| Priority | Automated Action |
+|---|---|
+| High | Send a high-priority email notification |
+| Medium | Send a medium-priority email notification |
+| Low | Save the analysis without sending an email |
 
-The AI response is parsed and validated before being saved.
-
-Automated Priority Routing
-
-Priority
-
-Action
-
-High
-
-Send a high-priority email notification
-
-Medium
-
-Send a medium-priority email notification
-
-Low
-
-Save the analysis without sending an email
-
-Database Management
+### Database Management
 
 Customer enquiries and AI-generated analyses are stored in an n8n Data Table.
 
-The workflow tracks processing status and whether an email notification was sent, failed or was unnecessary.
+Each record contains customer details, AI-generated insights, processing status and notification status.
 
-Error Handling
+### Error Handling
 
 The workflow includes:
 
-Customer information validation
+- Customer information validation
+- Duplicate-email detection
+- Database operation retries
+- AI API failure handling
+- AI response validation
+- Email notification retries
+- Error notification emails
 
-Duplicate-email detection
+## How the Automation Works
 
-Database operation retries
+The system operates through five main stages.
 
-AI API failure handling
+### 1. Customer Submission
 
-AI response validation
+A customer completes the website enquiry form.
 
-Email notification retries
+JavaScript collects the information and sends it to the n8n webhook using an HTTP POST request containing JSON data.
 
-Error notification emails
+### 2. Validation and Storage
 
-Project Structure
+n8n validates the submitted information and checks whether the customer's email address already exists in the database.
 
-ai-sales-lead-automation/
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── workflow/
-│   └── ai-sales-lead-workflow.json
-├── screenshots/
-└── README.md
+New enquiries are stored in an n8n Data Table.
 
-How It Works
+### 3. AI Analysis
 
-Customer submits website form
-              |
-              v
-       JavaScript POST
-              |
-              v
-         n8n Webhook
-              |
-              v
-      Validate enquiry
-              |
-              v
-     Check for duplicates
-              |
-              v
-       Save to database
-              |
-              v
-       Claude AI analysis
-              |
-              v
-     Validate AI response
-              |
-              v
-     Update database record
-              |
-              v
-       Priority routing
-          /   |   \
-         /    |    \
-       High Medium Low
-        |     |    |
-       Email Email No email
-         \    |    /
-          \   |   /
-       Track notification
-            status
+The enquiry is sent to Claude AI through an API integration.
 
-Running the Project Locally
+Claude analyses the customer's requirements, estimated budget and project description to determine the enquiry's priority, category, summary and recommended action.
 
-This repository contains a portfolio prototype, not a hosted production service.
+### 4. Automated Decision-Making
 
-To run it locally:
+The workflow evaluates the AI-generated priority.
 
-Install and start n8n.
+High- and medium-priority enquiries trigger automated email notifications containing the customer details and AI analysis.
 
-Import workflow/ai-sales-lead-workflow.json.
+Low-priority enquiries are recorded without sending an email notification.
 
-Configure your own Anthropic API and SMTP credentials.
+### 5. Status Tracking
 
-Create an n8n Data Table named sales_leads with the required fields.
+The database is updated with the AI analysis and notification status.
 
-Update the imported Data Table nodes to reference your table.
+The workflow also includes error-handling branches to identify and report selected processing failures.
 
-Start a test execution of the workflow.
+## Running the Project Locally
 
-Open frontend/index.html in a browser.
+This repository contains a functional portfolio prototype rather than a publicly hosted production service.
 
-Submit a test enquiry.
+To run the project locally:
 
-The frontend currently uses a local n8n test webhook. Update the webhook URL in script.js if your n8n instance uses a different address.
+1. Install and start n8n.
+2. Import the workflow from `workflow/ai-sales-lead-workflow.json`.
+3. Configure your own Anthropic API and SMTP credentials.
+4. Create an n8n Data Table named `sales_leads`.
+5. Add the required database fields:
+   - `name`
+   - `email`
+   - `service`
+   - `budget`
+   - `message`
+   - `status`
+   - `priority`
+   - `category`
+   - `summary`
+   - `recommended_action`
+   - `notification_status`
+6. Update the imported Data Table nodes to reference your database.
+7. Configure the sender and recipient email addresses.
+8. Start a test execution of the workflow.
+9. Open `frontend/index.html` in a browser.
+10. Submit a test enquiry.
 
-Testing
+**Note:** The frontend currently uses a local n8n test webhook. Update the webhook URL in `script.js` if your n8n instance uses a different address.
 
-The system was tested using simulated customer enquiries representing different business requirements and budgets.
+## Testing
+
+The system was tested using simulated customer enquiries representing different business requirements, budgets and project timelines.
 
 Testing covered:
 
-High-priority enquiries
-
-Medium-priority enquiries
-
-Low-priority enquiries
-
-Duplicate-customer detection
-
-Invalid customer information
-
-AI response validation
-
-Selected error-handling paths
+- High-priority enquiries
+- Medium-priority enquiries
+- Low-priority enquiries
+- Duplicate-customer detection
+- Invalid customer information
+- AI response validation
+- Selected error-handling paths
 
 Successful end-to-end tests confirmed that customer submissions could trigger the workflow, generate AI analysis, update the database and send the appropriate email notifications.
 
-Current Limitations
+## Current Limitations
 
 This project is a local prototype.
 
-Before production deployment, further work would be required for:
+Before production deployment, further development would be required for:
 
-Public hosting and HTTPS
+- Public hosting and HTTPS
+- Authentication, abuse prevention and rate limiting
+- Secure CORS configuration
+- Comprehensive error recovery and monitoring
+- Production webhook configuration
+- Improved customer-facing responses
 
-Authentication, abuse prevention and rate limiting
-
-Secure configuration of CORS
-
-More comprehensive error recovery and monitoring
-
-Production webhook configuration
-
-Improved customer-facing responses
-
-Future Improvements
+## Future Improvements
 
 Potential extensions include:
 
-CRM integrations
+- CRM integrations
+- Customer confirmation emails
+- Lead management dashboards
+- Automated follow-up scheduling
+- Integration with additional communication platforms
+- Cloud deployment
 
-Customer confirmation emails
+## Project Status
 
-Lead management dashboards
-
-Automated follow-up scheduling
-
-Integration with additional communication platforms
-
-Cloud deployment
-
-Project Status
-
-Completed — Functional portfolio prototype
+**Completed — Functional Portfolio Prototype**
 
 The frontend, n8n workflow, Claude AI integration, database storage and automated email notifications have been implemented and successfully tested.
+
+This project demonstrates practical experience with **API integrations, AI-powered decision-making, workflow automation, database operations, HTTP requests and automated business communications**.
