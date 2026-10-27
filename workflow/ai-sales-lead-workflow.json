@@ -1,0 +1,1768 @@
+{
+  "name": "Project 1 - AI Sales Lead Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "🚨 DATABASE UPDATE FAILED — AI ANALYSIS REQUIRES ATTENTION",
+        "html": "=<h2>🚨 DATABASE UPDATE FAILED</h2>\n\n<p>A customer enquiry was successfully received and analysed by AI, but the automation could not confirm that the analysis was saved to the database.</p>\n\n<h3>Customer Details</h3>\n\n<p><strong>Name:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.name }}</p>\n<p><strong>Email:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.email }}</p>\n<p><strong>Service:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.service }}</p>\n<p><strong>Budget:</strong> ${{ $('Edit Fields: Extract Customer Details').first().json.budget }}</p>\n<p><strong>Message:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.message }}</p>\n\n<h3>AI Analysis</h3>\n\n<p><strong>Priority:</strong> {{ $('Code in JavaScript: Validate AI Analysis').first().json.priority }}</p>\n<p><strong>Category:</strong> {{ $('Code in JavaScript: Validate AI Analysis').first().json.category }}</p>\n<p><strong>Summary:</strong> {{ $('Code in JavaScript: Validate AI Analysis').first().json.summary }}</p>\n<p><strong>Recommended Action:</strong> {{ $('Code in JavaScript: Validate AI Analysis').first().json.recommended_action }}</p>\n\n<h3>Error Details</h3>\n\n<p>{{ $json.error?.message || $json.message || 'Unknown database error' }}</p>\n\n<h3>Recommended Next Steps</h3>\n\n<p>Check the sales_leads database to determine whether the AI analysis was saved. If necessary, manually update the record using the information above.</p>\n\n<p><strong>Important:</strong> Review high-priority enquiries promptly.</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1728,
+        96
+      ],
+      "id": "213638ad-de84-4eb2-9f33-d5126073d917",
+      "name": "Database Update Failure Email"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "notification_status": "sent"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2160,
+        -400
+      ],
+      "id": "5fbeb3b7-f44c-4838-8eee-08e835df8d50",
+      "name": "Mark High Priority Email Sent"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "notification_status": "failed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2160,
+        -256
+      ],
+      "id": "ddeb8e3e-6ca4-422f-ac78-458a0e0c42e0",
+      "name": "Mark High Priority Email Failed"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "notification_status": "sent"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2352,
+        -192
+      ],
+      "id": "539c90aa-0c17-4a14-9ff7-2abf68495bc2",
+      "name": "Mark Medium Priority Email Sent"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "notification_status": "failed"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2352,
+        -32
+      ],
+      "id": "6fe45a62-4cb2-4203-97f6-42752ae0545e",
+      "name": "Mark Medium Priority Email Failed"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "notification_status": "not_required"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2352,
+        128
+      ],
+      "id": "0f990cf1-b2cd-4864-bad7-a21ccb941c34",
+      "name": "Mark Notification Not Required"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sales-lead",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        0
+      ],
+      "id": "a148e8d1-7e09-4362-b7c0-94e49d86cb86",
+      "name": "Webhook: Receive Customer Enquiry"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fa9efbeb-d11b-44ac-af7c-9fe0fcdd6761",
+              "name": "=name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "c72114fd-6a5d-40d7-8f42-21a37284909f",
+              "name": "=email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "952230e5-5e74-403d-a9c9-db420a1e58d4",
+              "name": "=service",
+              "value": "={{ $json.body.service }}",
+              "type": "string"
+            },
+            {
+              "id": "19c4ddb2-a53d-46fc-83ee-8ef6d9812486",
+              "name": "=budget",
+              "value": "={{ $json.body.budget }}",
+              "type": "number"
+            },
+            {
+              "id": "677c80b7-495f-4a40-953e-92f0c35bac97",
+              "name": "=message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "8a75db31-f63a-4ffc-a41f-f7599783cf01",
+      "name": "Edit Fields: Extract Customer Details"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "abbba7fd-af69-451b-9629-73367368dd30",
+              "name": "status",
+              "value": "invalid",
+              "type": "string"
+            },
+            {
+              "id": "7b790a65-5a83-4368-a5cc-091257026a46",
+              "name": "reason",
+              "value": "Failed lead validation",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        160,
+        112
+      ],
+      "id": "8522521e-595f-4889-a218-c7e8c8fbf778",
+      "name": "Edit Fields: Reject Invalid Enquiry"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "b6f34825-4e72-4cfc-a1f1-aaf33f6a3663",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2fb86203-fc81-450e-ad31-7a6543069e0e",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "c315d6ac-79bb-4639-ba07-20b02ba5012a",
+              "leftValue": "={{ $json.budget }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "fed3dc71-0e53-4fa3-9f20-9d92db626a05",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "d33cd4c1-44d3-4d04-9059-565f0213aa36",
+      "name": "If: Is Enquiry Valid?"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email",
+              "keyValue": "={{ $('Edit Fields: Extract Customer Details').item.json.email }}"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        -48
+      ],
+      "id": "96f2942c-f954-4690-a9b0-2474128bb3c1",
+      "name": "Get row(s): Check Existing Customers",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "38f40d4d-abe2-4224-928c-c8229364c702",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        400,
+        -80
+      ],
+      "id": "ae21c053-e658-4172-9755-54830bb964de",
+      "name": "If: Is Customer Already Registered?"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $('Edit Fields: Extract Customer Details').first().json.name }}",
+            "email": "={{ $('Edit Fields: Extract Customer Details').first().json.email }}",
+            "service": "={{ $('Edit Fields: Extract Customer Details').first().json.service }}",
+            "budget": "={{ $('Edit Fields: Extract Customer Details').first().json.budget }}",
+            "message": "={{ $('Edit Fields: Extract Customer Details').first().json.message }}",
+            "status": "new",
+            "notification_status": "pending"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "notification_status",
+              "displayName": "notification_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "76f86e86-0751-466f-b1ab-26330ca8a88e",
+      "name": "Insert row: Save New Customer Enquiry",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-haiku-5-5",
+          "mode": "list",
+          "cachedResultName": "claude-haiku-5-5"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{\n`You are an AI sales assistant for a digital services business.\n\nAnalyse the following customer enquiry.\n\nCustomer name: ${$('Edit Fields: Extract Customer Details').item.json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').item.json.email}\nRequested service: ${$('Edit Fields: Extract Customer Details').item.json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').item.json.budget}\nCustomer message: ${$('Edit Fields: Extract Customer Details').item.json.message}\n\nYour task:\n1. Assign a priority: high, medium, or low.\n2. Categorise the requested service.\n3. Summarise the enquiry in one sentence.\n4. Recommend the next action for the sales team.\n\nPriority guidelines:\n- High: Budget of $10,000 or more.\n- Medium: Budget between $3,000 and $9,999.\n- Low: Budget below $3,000.\n\nReturn ONLY valid JSON using this structure:\n\n{\n  \"priority\": \"high\",\n  \"category\": \"Website Development\",\n  \"summary\": \"Customer needs a new website.\",\n  \"recommended_action\": \"Contact customer within 24 hours.\"\n}\n\nDo not include markdown formatting or additional explanations.`\n}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "62e2c2f4-798d-4b35-8707-58170df06e04",
+      "name": "Message a model: Analyse Enquiry with AI",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Find Claude's text response\nconst textBlock = $json.content.find(\n  block => block.type === 'text' && typeof block.text === 'string'\n);\n\nif (!textBlock) {\n  throw new Error(\"No text response found from Claude\");\n}\n\n// Parse the JSON\nconst analysis = JSON.parse(textBlock.text);\n\n// Validate the response structure\nif (!analysis || typeof analysis !== 'object' || Array.isArray(analysis)) {\n  throw new Error(\"AI response must be a JSON object\");\n}\n\n// Validate priority\nconst priority = typeof analysis.priority === 'string'\n  ? analysis.priority.trim().toLowerCase()\n  : '';\n\nconst validPriorities = ['high', 'medium', 'low'];\n\nif (!validPriorities.includes(priority)) {\n  throw new Error(\"Invalid AI priority: \" + analysis.priority);\n}\n\n// Validate required fields\nconst requiredFields = [\n  'category',\n  'summary',\n  'recommended_action'\n];\n\nfor (const field of requiredFields) {\n  if (\n    typeof analysis[field] !== 'string' ||\n    analysis[field].trim() === ''\n  ) {\n    throw new Error(\"Missing or invalid AI field: \" + field);\n  }\n}\n\n// Return validated analysis\nreturn {\n  json: {\n    priority: priority,\n    category: analysis.category,\n    summary: analysis.summary,\n    recommended_action: analysis.recommended_action\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        -96
+      ],
+      "id": "80e70cf4-dc9d-4ee5-9e86-fab2fc17857b",
+      "name": "Code in JavaScript: Validate AI Analysis",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_DATA_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "sales_leads"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Insert row: Save New Customer Enquiry').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "analysed",
+            "priority": "={{ $json.priority }}",
+            "category": "={{ $json.category }}",
+            "summary": "={{ $json.summary }}",
+            "recommended_action": "={{ $json.recommended_action }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recommended_action",
+              "displayName": "recommended_action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1488,
+        -96
+      ],
+      "id": "62345ce3-7abf-4d5d-a19f-c6c840cd59b3",
+      "name": "Update row(s): Save AI Analysis to Database",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "b05131f7-3252-433f-be81-4f60881365ab",
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        1712,
+        -96
+      ],
+      "id": "10353976-66de-4ef7-aa98-1f6d8e3223d4",
+      "name": "If: Is Enquiry High Priority?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "0056fd74-f4ab-43b1-9e7a-fab27160f3f4",
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "medium",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        1936,
+        0
+      ],
+      "id": "0faa27aa-b80e-419a-b0b7-6022302db6b3",
+      "name": "If: Is Enquiry Medium Priority?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "4b51b2bc-5ff7-4970-ba9c-540231368418",
+              "leftValue": "={{ $json.priority }}",
+              "rightValue": "low",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        2160,
+        96
+      ],
+      "id": "0465c33d-4cdf-4d51-b0e6-ac0067387d08",
+      "name": "If: Is Enquiry Low Priority?"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "={{ '🔴 HIGH PRIORITY LEAD — ' + $('Edit Fields: Extract Customer Details').item.json.name }}",
+        "emailFormat": "text",
+        "text": "={{\n`🚨 NEW HIGH-PRIORITY SALES LEAD\n\nCUSTOMER DETAILS\nName: ${$('Edit Fields: Extract Customer Details').item.json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').item.json.email}\nService: ${$('Edit Fields: Extract Customer Details').item.json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').item.json.budget}\n\nAI ANALYSIS\nPriority: ${$json.priority}\nCategory: ${$json.category}\n\nSummary:\n${$json.summary}\n\nRECOMMENDED ACTION\n${$json.recommended_action}\n\n---\nAutomatically generated by AI Sales Lead Automation.`\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1936,
+        -192
+      ],
+      "id": "92a7cea0-d835-4fb8-8ec3-a7397072cb77",
+      "name": "Send High Priority Email",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "⚠️ UNEXPECTED AI CLASSIFICATION — MANUAL REVIEW REQUIRED",
+        "emailFormat": "text",
+        "text": "={{\n`⚠️ UNEXPECTED AI CLASSIFICATION\n\nClaude analysed a customer enquiry but returned an unexpected priority.\n\nCUSTOMER DETAILS\nName: ${$('Edit Fields: Extract Customer Details').first().json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').first().json.email}\nService: ${$('Edit Fields: Extract Customer Details').first().json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').first().json.budget}\n\nAI ANALYSIS\nReturned Priority: ${$json.priority ?? 'Missing'}\nCategory: ${$json.category ?? 'Unknown'}\n\nSummary:\n${$json.summary ?? 'Not provided'}\n\nACTION REQUIRED\nReview this enquiry manually and determine its priority.\n\n---\nAutomatically generated by AI Sales Lead Automation.`\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2352,
+        288
+      ],
+      "id": "8b051f9d-a5f3-4b29-adc5-15f7f1a2f53d",
+      "name": "Unkown Priority Error Email"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "⚠️ AI ANALYSIS FAILED — MANUAL REVIEW REQUIRED",
+        "emailFormat": "text",
+        "text": "={{\n`⚠️ AI ANALYSIS FAILED — MANUAL REVIEW REQUIRED\n\nA customer enquiry was received, but Claude AI could not analyse it.\n\nCUSTOMER DETAILS\nName: ${$('Edit Fields: Extract Customer Details').item.json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').item.json.email}\nService: ${$('Edit Fields: Extract Customer Details').item.json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').item.json.budget}\n\nCustomer Message:\n${$('Edit Fields: Extract Customer Details').item.json.message}\n\nERROR DETAILS\n${$json.error?.message || $json.error || 'Unknown AI error'}\n\nACTION REQUIRED\nReview this enquiry manually and contact the customer if necessary.\n\n---\nAutomatically generated by AI Sales Lead Automation.`\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        192
+      ],
+      "id": "1480158a-d3a6-4aee-9293-5bfe9006e5dd",
+      "name": "AI Analysis Failure Email"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "=⚠️ AI RESPONSE ERROR — MANUAL REVIEW REQUIRED",
+        "emailFormat": "text",
+        "text": "={{\n`⚠️ AI ANALYSIS FAILED — MANUAL REVIEW REQUIRED\n\nA customer enquiry was received, but Claude AI could not analyse it.\n\nCUSTOMER DETAILS\nName: ${$('Edit Fields: Extract Customer Details').item.json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').item.json.email}\nService: ${$('Edit Fields: Extract Customer Details').item.json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').item.json.budget}\n\nCustomer Message:\n${$('Edit Fields: Extract Customer Details').item.json.message}\n\nERROR DETAILS\n${$json.error?.message || $json.error || 'Unknown AI error'}\n\nACTION REQUIRED\nReview this enquiry manually and contact the customer if necessary.\n\n---\nAutomatically generated by AI Sales Lead Automation.`\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1488,
+        64
+      ],
+      "id": "d097513e-7ce9-4d2f-bed9-f3d1ad58e391",
+      "name": "Invalid AI Response Email"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "🚨 DATABASE ERROR — CUSTOMER ENQUIRY REQUIRES ATTENTION",
+        "html": "=<h2>🚨 DATABASE ERROR — MANUAL REVIEW REQUIRED</h2>\n\n<p>A customer enquiry was received, but the automation could not confirm that it was saved to the database.</p>\n\n<h3>Customer Details</h3>\n\n<p><strong>Name:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.name }}</p>\n<p><strong>Email:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.email }}</p>\n<p><strong>Service:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.service }}</p>\n<p><strong>Budget:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.budget }}</p>\n<p><strong>Message:</strong> {{ $('Edit Fields: Extract Customer Details').first().json.message }}</p>\n\n<h3>Error Details</h3>\n\n<p>{{ $json.error?.message || $json.message || 'Unknown database error' }}</p>\n\n<h3>Recommended Action</h3>\n\n<p>Check whether this enquiry exists in the sales_leads database before manually adding it. Contact the customer if necessary.</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        864,
+        64
+      ],
+      "id": "470e0323-b1aa-4058-9dac-1bdaa18424c0",
+      "name": "Database Append Failure Email"
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "={{ '🟡 MEDIUM PRIORITY LEAD — ' + $('Edit Fields: Extract Customer Details').item.json.name }}",
+        "emailFormat": "text",
+        "text": "={{\n`🟡 NEW MEDIUM-PRIORITY SALES LEAD\n\nCUSTOMER DETAILS\nName: ${$('Edit Fields: Extract Customer Details').item.json.name}\nEmail: ${$('Edit Fields: Extract Customer Details').item.json.email}\nService: ${$('Edit Fields: Extract Customer Details').item.json.service}\nBudget: $${$('Edit Fields: Extract Customer Details').item.json.budget}\n\nAI ANALYSIS\nPriority: ${$json.priority}\nCategory: ${$json.category}\n\nSummary:\n${$json.summary}\n\nRECOMMENDED ACTION\n${$json.recommended_action}\n\n---\nAutomatically generated by AI Sales Lead Automation.`\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2144,
+        -64
+      ],
+      "id": "e2e121f0-4534-408b-97a7-fc63362c818b",
+      "name": "Send Medium Priority Email",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook: Receive Customer Enquiry": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields: Extract Customer Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields: Extract Customer Details": {
+      "main": [
+        [
+          {
+            "node": "If: Is Enquiry Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If: Is Enquiry Valid?": {
+      "main": [
+        [
+          {
+            "node": "Get row(s): Check Existing Customers",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields: Reject Invalid Enquiry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s): Check Existing Customers": {
+      "main": [
+        [
+          {
+            "node": "If: Is Customer Already Registered?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If: Is Customer Already Registered?": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Insert row: Save New Customer Enquiry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row: Save New Customer Enquiry": {
+      "main": [
+        [
+          {
+            "node": "Message a model: Analyse Enquiry with AI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Database Append Failure Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model: Analyse Enquiry with AI": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript: Validate AI Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Analysis Failure Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript: Validate AI Analysis": {
+      "main": [
+        [
+          {
+            "node": "Update row(s): Save AI Analysis to Database",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Invalid AI Response Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s): Save AI Analysis to Database": {
+      "main": [
+        [
+          {
+            "node": "If: Is Enquiry High Priority?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Database Update Failure Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If: Is Enquiry High Priority?": {
+      "main": [
+        [
+          {
+            "node": "Send High Priority Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If: Is Enquiry Medium Priority?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If: Is Enquiry Medium Priority?": {
+      "main": [
+        [
+          {
+            "node": "Send Medium Priority Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If: Is Enquiry Low Priority?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If: Is Enquiry Low Priority?": {
+      "main": [
+        [
+          {
+            "node": "Mark Notification Not Required",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Unkown Priority Error Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send High Priority Email": {
+      "main": [
+        [
+          {
+            "node": "Mark High Priority Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark High Priority Email Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Medium Priority Email": {
+      "main": [
+        [
+          {
+            "node": "Mark Medium Priority Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Medium Priority Email Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": [],
+  "tags": []
+}

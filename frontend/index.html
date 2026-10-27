@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Automation Enquiry</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+            <h1>Let's Automate Your Business</h1>
+            <p>
+                Tell us about your business and the processes
+                you'd like to automate.
+            </p>
+        </header>
+
+        <form id="enquiryForm">
+
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="service">Service Required</label>
+            <select id="service" name="service" required>
+                <option value="">Select a service</option>
+                <option value="AI Automation">AI Automation</option>
+                <option value="Workflow Automation">Workflow Automation</option>
+                <option value="AI Chatbot">AI Chatbot</option>
+                <option value="General Enquiry">General Enquiry</option>
+            </select>
+
+            <label for="budget">Estimated Budget ($AUD)</label>
+            <input
+                type="number"
+                id="budget"
+                name="budget"
+                placeholder="Enter your estimated budget"
+                min="0"
+                required
+            >
+
+            <label for="message">Tell Us About Your Project</label>
+            <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Describe your business and what you'd like to automate..."
+                required
+            ></textarea>
+
+            <button type="submit">Submit Enquiry</button>
+
+            <p id="formStatus" role="status" aria-live="polite"></p>
+
+        </form>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
